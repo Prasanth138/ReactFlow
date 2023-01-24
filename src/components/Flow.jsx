@@ -6,17 +6,19 @@ import ReactFlow, {
   applyEdgeChanges,
   addEdge,
   MiniMap,
-  Panel
+  Panel,
+  MarkerType,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { Stack, VStack, Box, Button,Checkbox } from "@chakra-ui/react";
 import "./Flow.css";
 
+
 const initialNodes = [
   {
     id: 'A',
     type: 'group',
-    position: { x: 100, y: -100 },
+    position: { x: 100, y: -120 },
     style: {
       width: 170,
       height: 140,
@@ -29,7 +31,6 @@ const initialNodes = [
     position: { x: 10, y: 10 },
     parentNode: 'A',
     extent: 'parent',
-    shape: 'hexagon',
     style: { backgroundColor: "#6ede87", color: "white" },
   },
   {
@@ -50,7 +51,7 @@ const initialNodes = [
   {
     id: 'C',
     type: 'output',
-    position: { x: 150, y: 80 },
+    position: { x: 150, y: 90 },
     data: { label: 'Node B' },
     className: 'circle',
     style: { backgroundColor: "#6865A5", color: "white" },
@@ -58,7 +59,7 @@ const initialNodes = [
   {
     id: 'D',
     type: 'output',
-    position: { x: 300, y: 90 },
+    position: { x: 300, y: 80 },
     data: { label: 'Node C' },
     style: { backgroundColor: "#6865A5", color: "white" },
   },
@@ -66,9 +67,62 @@ const initialNodes = [
 
 
 const initialEdges = [
-  { id: 'a1-a2', source: 'A-1', target: 'A-2' },
-  { id: 'a2-b', source: 'A-2', target: 'B',animated: true  },
-  { id: 'a2-c', source: 'A-2', target: 'C',animated: true  },
+  {
+    id: "a1-a2",
+    source: "A-1",
+    target: "A-2",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+    },
+  },
+  {
+    id: "a2-b",
+    source: "A-2",
+    target: "B",
+    animated: true,
+    label: "Animated Edge",
+    labelBgPadding: [8, 4],
+    labelBgBorderRadius: 4,
+    labelBgStyle: { fill: "#FFCC00", color: "#fff", fillOpacity: 0.7 },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      orient: 'auto-start-reverse',
+    },
+  },
+  {
+    id: "a2-c",
+    source: "A-2",
+    target: "C",
+    style: {
+      strokeWidth: 1,
+      stroke: '#FF0072',
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      orient: 'auto-start-reverse',
+      color: '#FF0072',
+    },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 20,
+      height: 20,
+      color: '#FF0072',
+    },
+  },
+  {
+    id: "a2-c",
+    source: "A-2",
+    target: "D",
+    labelBgPadding: [8, 4],
+    labelBgBorderRadius: 4,
+    labelBgStyle: { fill: "#FFCC00", color: "#fff", fillOpacity: 0.7 },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+    },
+  }
 ];
 
 const nodeColor = (node) => {
