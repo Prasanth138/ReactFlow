@@ -81,7 +81,7 @@ const initialEdges = [
     target: "B",
     animated: true,
     label: "Animated Edge",
-    labelBgPadding: [8, 4],
+    labelBgPadding: [6, 3],
     labelBgBorderRadius: 4,
     labelBgStyle: { fill: "#FFCC00", color: "#fff", fillOpacity: 0.7 },
     markerEnd: {
@@ -116,9 +116,6 @@ const initialEdges = [
     id: "a2-c",
     source: "A-2",
     target: "D",
-    labelBgPadding: [8, 4],
-    labelBgBorderRadius: 4,
-    labelBgStyle: { fill: "#FFCC00", color: "#fff", fillOpacity: 0.7 },
     markerEnd: {
       type: MarkerType.ArrowClosed,
     },
