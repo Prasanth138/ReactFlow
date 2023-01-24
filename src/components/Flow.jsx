@@ -26,7 +26,7 @@ const initialNodes = [
   },
   {
     id: 'A-1',
-    type: 'input',
+    type: 'custom',
     data: { label: 'Child Node 1' },
     position: { x: 10, y: 10 },
     parentNode: 'A',
@@ -50,8 +50,8 @@ const initialNodes = [
   },
   {
     id: 'C',
-    type: 'output',
-    position: { x: 150, y: 90 },
+    type: 'custom',
+    position: { x: 110, y: 90 },
     data: { label: 'Node B' },
     className: 'circle',
     style: { backgroundColor: "#6865A5", color: "white" },
@@ -80,46 +80,74 @@ const initialEdges = [
     source: "A-2",
     target: "B",
     animated: true,
+    style: {
+      strokeWidth: 1,
+      stroke: "#FF0072",
+    },
     label: "Animated Edge",
     labelBgPadding: [6, 3],
     labelBgBorderRadius: 4,
     labelBgStyle: { fill: "#FFCC00", color: "#fff", fillOpacity: 0.7 },
-    markerEnd: {
-      type: MarkerType.ArrowClosed,
-    },
     markerStart: {
       type: MarkerType.ArrowClosed,
-      orient: 'auto-start-reverse',
-    },
-  },
-  {
-    id: "a2-c",
-    source: "A-2",
-    target: "C",
-    style: {
-      strokeWidth: 1,
-      stroke: '#FF0072',
-    },
-    markerStart: {
-      type: MarkerType.ArrowClosed,
-      orient: 'auto-start-reverse',
-      color: '#FF0072',
+      orient: "auto-start-reverse",
+      color: "#FF0072",
     },
     markerEnd: {
       type: MarkerType.ArrowClosed,
       width: 20,
       height: 20,
-      color: '#FF0072',
+      color: "#FF0072",
+    },
+    
+  },
+  {
+    id: "a2-c",
+    source: "A-2",
+    target: "C",
+    type: "straight",
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      orient: "auto-start-reverse",
     },
   },
   {
     id: "a2-c",
     source: "A-2",
     target: "D",
+    type: "smoothstep",
     markerEnd: {
       type: MarkerType.ArrowClosed,
     },
-  }
+  },
+  {
+    id: "c-a1",
+    source: "C",
+    target: "A-1",
+    sourceX: "top",
+    sourceY: "top",
+    targetX: "left",
+    targetY: "left",
+    type: "smoothstep",
+    style: {
+      strokeWidth: 1,
+      stroke: "#FF0072",
+    },
+    markerStart: {
+      type: MarkerType.ArrowClosed,
+      orient: "auto-start-reverse",
+      color: "#FF0072",
+    },
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      width: 20,
+      height: 20,
+      color: "#FF0072",
+    },
+  },
 ];
 
 const nodeColor = (node) => {
