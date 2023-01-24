@@ -127,10 +127,6 @@ const initialEdges = [
     id: "c-a1",
     source: "C",
     target: "A-1",
-    sourceX: "top",
-    sourceY: "top",
-    targetX: "left",
-    targetY: "left",
     type: "smoothstep",
     style: {
       strokeWidth: 1,
@@ -188,6 +184,16 @@ function Flow() {
     []
   );
 
+  const ConnectionLine = {
+    fromX : 20,
+    fromY : 20,
+    fromPosition: "bottom",
+    toX : 50,
+    toY :50,
+    toPosition : "left",
+    connectionLineType:"step"
+  }
+
   useEffect(() => {
     setEdges((eds) => eds.map(hide(hidden)));
   }, [hidden]);
@@ -212,6 +218,7 @@ function Flow() {
             edges={edges}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
+            connectionLineComponent={ConnectionLine}
             fitView
           >
             <Background color="#99b3ec" variant={variant} />
