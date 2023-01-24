@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from 'react';
 import ReactFlow, {
   Controls,
   Background,
@@ -9,14 +9,14 @@ import ReactFlow, {
   Panel
 } from "reactflow";
 import "reactflow/dist/style.css";
-import { Stack, VStack, Box, Button } from "@chakra-ui/react";
-import "./Flow.css"
+import { Stack, VStack, Box, Button,Checkbox } from "@chakra-ui/react";
+import "./Flow.css";
 
 const initialNodes = [
   {
     id: 'A',
     type: 'group',
-    position: { x: 100, y: 0 },
+    position: { x: 100, y: -100 },
     style: {
       width: 170,
       height: 140,
@@ -29,6 +29,7 @@ const initialNodes = [
     position: { x: 10, y: 10 },
     parentNode: 'A',
     extent: 'parent',
+    shape: 'hexagon',
     style: { backgroundColor: "#6ede87", color: "white" },
   },
   {
@@ -42,14 +43,14 @@ const initialNodes = [
   {
     id: 'B',
     type: 'output',
-    position: { x: -100, y: 200 },
+    position: { x: -100, y: 90 },
     data: { label: 'Node A' },
     style: { backgroundColor: "#6865A5", color: "white" },
   },
   {
     id: 'C',
     type: 'output',
-    position: { x: 150, y: 190 },
+    position: { x: 150, y: 80 },
     data: { label: 'Node B' },
     className: 'circle',
     style: { backgroundColor: "#6865A5", color: "white" },
@@ -57,7 +58,7 @@ const initialNodes = [
   {
     id: 'D',
     type: 'output',
-    position: { x: 300, y: 200 },
+    position: { x: 300, y: 90 },
     data: { label: 'Node C' },
     style: { backgroundColor: "#6865A5", color: "white" },
   },
@@ -82,10 +83,17 @@ const nodeColor = (node) => {
 };
 
 
+const hide = (hidden) => (nodeOrEdge) => {
+  nodeOrEdge.hidden = hidden;
+  return nodeOrEdge;
+};
+
+
 function Flow() {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
   const [variant, setVariant] = useState('cross');
+  const [hidden, setHidden] = useState(false);
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -100,6 +108,11 @@ function Flow() {
     (params) => setEdges((eds) => addEdge(params, eds)),
     []
   );
+
+  useEffect(() => {
+    setEdges((eds) => eds.map(hide(hidden)));
+  }, [hidden]);
+
 
   return (
     <Stack bg="blue.50">
@@ -124,10 +137,27 @@ function Flow() {
           >
             <Background color="#99b3ec" variant={variant} />
             <Panel position="top-left">
-              <Box >Background variant:</Box>
-              <Button mx={1} onClick={() => setVariant("dots")}>dots</Button>
-              <Button mx={1} onClick={() => setVariant("lines")}>lines</Button>
-              <Button mx={1} onClick={() => setVariant("cross")}>cross</Button>
+              <Box>Background variant:</Box>
+              <Button mx={1} onClick={() => setVariant("dots")}>
+                dots
+              </Button>
+              <Button mx={1} onClick={() => setVariant("lines")}>
+                lines
+              </Button>
+              <Button mx={1} onClick={() => setVariant("cross")}>
+                cross
+              </Button>
+            </Panel>
+            <Panel position="top-right">
+              <Box>Hide Edges</Box>
+              <Checkbox
+                id="ishidden"
+                checked={hidden}
+                onChange={(event) => setHidden(event.target.checked)}
+                className="react-flow__ishidden"
+              >
+                Hide
+              </Checkbox>
             </Panel>
             <Controls />
             <MiniMap
